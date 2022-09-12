@@ -1,0 +1,11 @@
+#Creates New security group in Specialized OU
+Function New-SGroup
+{[cmdletbinding()]
+    Param(
+        [Parameter(Mandatory=$true)][string]$Gname)
+
+        
+  New-ADGroup -name $Gname -GroupScope Global -GroupCategory Security -path 'OU="SecurityGroups",DC="Adatum",DC="Com"'
+ 
+  
+  }

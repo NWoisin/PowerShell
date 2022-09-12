@@ -1,0 +1,11 @@
+#Creates new Distribution Group in a specialized OU
+Function New-DGroup
+{[cmdletbinding()]
+    Param(
+        [Parameter(Mandatory=$true)][string]$Gname)
+
+        
+  New-ADGroup -name $Gname -GroupScope Global -GroupCategory Distribution -path 'OU="DistributionGroups",DC="Adatum",DC="Com"'
+ 
+  
+  }
