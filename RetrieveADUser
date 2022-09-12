@@ -1,12 +1,9 @@
+#Built in test environment; may need adjustment
 Function Get-User {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$True,
-                   ValueFromPipeline=$True,
-                   ValueFromPipelineByPropertyName=$Name)]
-        [string]$Identity
-        )
-        
-        Get-AdUser -Identity $Identity
-        
-}
+        [Parameter(Mandatory=$true)]
+        [string]$identity )
+
+        Get-AdUser -Identity $identity
+        }

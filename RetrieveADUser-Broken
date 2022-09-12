@@ -1,0 +1,12 @@
+Function Get-User {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory=$True,
+                   ValueFromPipeline=$True,
+                   ValueFromPipelineByPropertyName=$Name)]
+        [string]$Identity
+        )
+        
+        Get-AdUser -Identity $Identity
+        
+}
