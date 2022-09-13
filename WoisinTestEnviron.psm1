@@ -29,4 +29,30 @@ function New-OU
 $DisabledAccounts = "OU=DisabledAccounts,DC=Adatum,DC=com"
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -notlike "*$DisabledAccounts" | Move-ADObject -TargetPath $DisabledAccounts
 
-#
+##Creates New security group in Specialized OU
+Function New-SGroup
+{[cmdletbinding()]
+    Param(
+        [Parameter(Mandatory=$true)][string]$Gname)
+
+        
+  New-ADGroup -name $Gname -GroupScope Global -GroupCategory Security -path 'OU="SecurityGroups",DC="Adatum",DC="Com"'
+ 
+  
+  }
+
+  #Creates new Distribution Group in a specialized OU
+Function New-DGroup
+{[cmdletbinding()]
+    Param(
+        [Parameter(Mandatory=$true)][string]$Gname)
+
+        
+  New-ADGroup -name $Gname -GroupScope Global -GroupCategory Distribution -path 'OU="DistributionGroups",DC="Adatum",DC="Com"'
+ 
+  
+  }
+  ##Locate disabled AD Accounts,  Move to disabled OU.  Build in test environment;may need to adjust to use outside.
+
+$DisabledAccounts = "OU=DisabledAccounts,DC=Adatum,DC=com"
+Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -notlike "*$DisabledAccounts" | Move-ADObject -TargetPath $DisabledAccounts
