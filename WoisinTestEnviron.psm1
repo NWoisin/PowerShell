@@ -28,3 +28,5 @@ function New-OU
 
 $DisabledAccounts = "OU=DisabledAccounts,DC=Adatum,DC=com"
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -notlike "*$DisabledAccounts" | Move-ADObject -TargetPath $DisabledAccounts
+
+#
