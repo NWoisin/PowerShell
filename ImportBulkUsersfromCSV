@@ -1,0 +1,57 @@
+#Import Active Directory Module if needed (remove #)
+# Import-Module ActiveDirectory
+
+#store Data from Users.csv in variable - Change the location to match where you are pulling your CSV file from
+$csvUsers = import-csv C:\users1.csv
+
+#Define your User PRincipal Name (UPN)
+$UPN = "adatum.com"
+
+#Loop through each row containing user details in the csv file
+
+ForEach ($User in $csvUsers) {
+$firstname = $user.firstname
+$lastname = $user.lastname
+$ou = $user.ou
+$username = $user.username
+$password = $user.password
+$email = $user.email
+$StreetAddress = $user.streetaddress
+$city = $user.city
+$zipcode = $user.ZipCode
+$state = $user.state
+$country = $user.country
+$department = $user.department
+$telephone = $user.telephone
+$jobtitle = $user.jobtitle
+$department = $user.department
+
+#A ForEach Loop that checks for the Account Name before creating; it will warn you if a user already exists
+if (Get-ADUser -F { SamAccountName -eq $username }) {
+
+Write-Warning "A user account with the username $username already exists" }
+else {
+New-ADUser `
+-SamAccountName $username `
+-UserPrincipalName "$username@$UPN" `
+-Name "$firstname $lastname" `
+-GivenName $firstname `
+-Surname $lastname `
+-enabled $true `
+-displayName "$firstname $lastname" `
+-Path $ou `
+-City $city `
+-PostalCode $zipcode `
+-Country $country `
+-Department $department `
+-OfficePhone $telephone `
+-Title $jobtitle `
+-Company $company `
+-AccountPassword (ConvertTo-SecureString $password -AsPlainText -Force) `
+-ChangePasswordAtLogon $true 
+
+#if created, message will read as follows:
+Write-Host "The User account $username has been created" -ForegroundColor Cyan }}
+
+Read-host -prompt "Press Enter to Exit"
+
