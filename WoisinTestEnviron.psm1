@@ -56,3 +56,23 @@ Function New-DGroup
 
 $DisabledAccounts = "OU=DisabledAccounts,DC=Adatum,DC=com"
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -notlike "*$DisabledAccounts" | Move-ADObject -TargetPath $DisabledAccounts
+
+Function PrinterList
+{
+    Param(
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true
+                  )][string]$ComputerName )
+
+Get-Printer -ComputerName $ComputerName
+}
+
+# Restart a remote machine. Singular machine only.
+Function Reboot {
+    [cmdletbinding()]
+    Param(
+        [Parameter(Mandatory=$true)
+        [string]$ComputerName
+        )
+    Restart-Computer -ComputerName $ComputerName -confirm
+}
