@@ -1,4 +1,5 @@
 ##Locate disabled AD Accounts,  Move to disabled OU.  Build in test environment;may need to adjust to use outside.
-
+#Uncomment line below if OU does not exist.
+#New-ADOrganizationalUnit -name DisabledAccounts
 $DisabledAccounts = "OU=DisabledAccounts,DC=Adatum,DC=com"
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -notlike "*$DisabledAccounts" | Move-ADObject -TargetPath $DisabledAccounts
