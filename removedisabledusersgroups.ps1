@@ -10,6 +10,7 @@ $dev = "Development"
 $res = "Research"
 $disabled = "OU=DisabledAccounts,DC=Adatum,DC=Com"
 
+Start-Transcript C:\MoveandRemove.log
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -NotLike "$DisabledAccounts" | Move-ADObject -TargetPath $disabled
 
 $itmember = (Get-ADGroup $it -properties members).members
@@ -65,3 +66,4 @@ if (-not($userstatus.enabled -eq "false")){
         Remove-ADGroupMember $res -Members $member -Confirm:$false -verbose
         }
 }
+Stop-Transcript
