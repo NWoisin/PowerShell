@@ -1,6 +1,7 @@
 #Remove disbaled users from groups except for Domain Users
 #developed in MSSA Lab environment, changes will need to be made in order to use in production
 #for each group, define a variable as $<groupname>
+#may need to change the Disabled Accounts OU
 $it = "IT"
 $market = "Marketing"
 $manager = "Managers"
