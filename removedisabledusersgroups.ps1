@@ -2,7 +2,9 @@
 #developed in MSSA Lab environment, changes will need to be made in order to use in production
 #for each group, define a variable as $<groupname>
 #may need to change the Disabled Accounts OU
-$it = "IT"
+#Remove disbaled users from groups
+#for each group, define a variable as $<groupname>
+$IT = "IT"
 $market = "Marketing"
 $manager = "Managers"
 $sales = "Sales"
@@ -10,17 +12,18 @@ $dev = "Development"
 $res = "Research"
 $disabled = "OU=DisabledAccounts,DC=Adatum,DC=Com"
 
-Start-Transcript C:\MoveandRemove.log
+Start-Transcript C:\moveandremove.log
 Search-ADAccount -AccountDisabled -UsersOnly | Where-Object DistinguishedName -NotLike "$DisabledAccounts" | Move-ADObject -TargetPath $disabled
 
-$itmember = (Get-ADGroup $it -properties members).members
-foreach ($member in $itmembers) {
-    Write-Verbose "Checking on '$member' ... " -Verbose
-    $userstatus = Get-ADUser $member
-    if (-not($userstatus.enabled -eq "false")){
-        Remove-ADGroupMember $it -Members $member -Confirm:$false -verbose
-        }
-    }
+
+$itMember = (Get-ADGroup $it -Properties members).members
+  foreach ($member in $itMember) {
+   Write-Verbose "Checking on '$member' ... " -Verbose
+  $userstatus = Get-ADuser $member
+   if (-not($userstatus.enabled -eq "False")){
+  Remove-ADGroupMember $it -Members $member -Confirm:$false -verbose
+     }
+  }
 
     $markMember = (Get-ADGroup $market -Properties members).members
 foreach ($member in $markMember) {
